@@ -1,0 +1,14 @@
+/Users/mihailsmirnov/DZ5/bin/Debug/net10.0/DZ5
+/Users/mihailsmirnov/DZ5/bin/Debug/net10.0/DZ5.deps.json
+/Users/mihailsmirnov/DZ5/bin/Debug/net10.0/DZ5.runtimeconfig.json
+/Users/mihailsmirnov/DZ5/bin/Debug/net10.0/DZ5.dll
+/Users/mihailsmirnov/DZ5/bin/Debug/net10.0/DZ5.pdb
+/Users/mihailsmirnov/DZ5/obj/Debug/net10.0/DZ5.GeneratedMSBuildEditorConfig.editorconfig
+/Users/mihailsmirnov/DZ5/obj/Debug/net10.0/DZ5.AssemblyInfoInputs.cache
+/Users/mihailsmirnov/DZ5/obj/Debug/net10.0/DZ5.AssemblyInfo.cs
+/Users/mihailsmirnov/DZ5/obj/Debug/net10.0/DZ5.csproj.CoreCompileInputs.cache
+/Users/mihailsmirnov/DZ5/obj/Debug/net10.0/DZ5.dll
+/Users/mihailsmirnov/DZ5/obj/Debug/net10.0/refint/DZ5.dll
+/Users/mihailsmirnov/DZ5/obj/Debug/net10.0/DZ5.pdb
+/Users/mihailsmirnov/DZ5/obj/Debug/net10.0/DZ5.genruntimeconfig.cache
+/Users/mihailsmirnov/DZ5/obj/Debug/net10.0/ref/DZ5.dll
