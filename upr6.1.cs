@@ -46,7 +46,6 @@ class Program
 
         try
         {
-            // Содержимое файла заносим в список символов
             List<char> text = new List<char>(File.ReadAllText(fileName, Encoding.UTF8));
 
             CountLetters(text, out int vowels, out int consonants);
