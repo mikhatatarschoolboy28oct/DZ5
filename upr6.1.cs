@@ -1,35 +1,62 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 class Program
 {
-    static void PrintMatrix(int[,] m)
+   
+    private const string Vowels = "аеёиоуыэюяaeiouy";
+    private const string Consonants = "бвгджзйклмнпрстфхцчшщbcdfghjklmnpqrstvwxz";
+
+
+    static void CountLetters(List<char> text, out int vowels, out int consonants)
     {
-        for (int i = 0; i < m.GetLength(0); i++)
+        vowels = 0;
+        consonants = 0;
+
+        foreach (char c in text)
         {
-            for (int j = 0; j < m.GetLength(1); j++)
-                Console.Write($"{m[i, j],6}");
-            Console.WriteLine();
+            char lower = char.ToLower(c);
+
+            if (Vowels.IndexOf(lower) >= 0)
+                vowels++;
+            else if (Consonants.IndexOf(lower) >= 0)
+                consonants++;
         }
     }
 
-    static int[,] MultiplyMatrices(int[,] a, int[,] b)
+    static void Main(string[] args)
     {
-        if (a.GetLength(1) != b.GetLength(0))
-            throw new ArgumentException("Умножение невозможно: размеры не согласованы.");
+        Console.OutputEncoding = Encoding.UTF8;
 
-        int[,] r = new int[a.GetLength(0), b.GetLength(1)];
-        for (int i = 0; i < r.GetLength(0); i++)
-            for (int j = 0; j < r.GetLength(1); j++)
-                for (int k = 0; k < a.GetLength(1); k++)
-                    r[i, j] += a[i, k] * b[k, j];
-        return r;
-    }
+        if (args.Length == 0)
+        {
+            Console.WriteLine("Использование: Program <имя_файла>");
+            return;
+        }
 
-    static void Main()
-    {
-        int[,] a = { { 1, 2, 3 }, { 4, 5, 6 } };
-        int[,] b = { { 7, 8 }, { 9, 10 }, { 11, 12 } };
+        string fileName = "world.txt";
 
-        PrintMatrix(MultiplyMatrices(a, b));
+        if (!File.Exists(fileName))
+        {
+            Console.WriteLine($"Файл \"{fileName}\" не найден.");
+            return;
+        }
+
+        try
+        {
+            // Содержимое файла заносим в список символов
+            List<char> text = new List<char>(File.ReadAllText(fileName, Encoding.UTF8));
+
+            CountLetters(text, out int vowels, out int consonants);
+
+            Console.WriteLine($"Гласных букв:   {vowels}");
+            Console.WriteLine($"Согласных букв: {consonants}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Ошибка при чтении файла: " + ex.Message);
+        }
     }
 }
