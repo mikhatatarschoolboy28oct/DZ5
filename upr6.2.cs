@@ -1,53 +1,44 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 class Program
 {
-    static void PrintMatrix(LinkedList<LinkedList<int>> m)
+    static Dictionary<string, double> GetMonthlyAverages(Dictionary<string, int[]> temperature)
     {
-        foreach (var row in m)
-        {
-            foreach (var x in row)
-                Console.Write($"{x,6}");
-            Console.WriteLine();
-        }
-    }
-
-    static LinkedList<LinkedList<int>> MultiplyMatrices(
-        LinkedList<LinkedList<int>> a, LinkedList<LinkedList<int>> b)
-    {
-        var result = new LinkedList<LinkedList<int>>();
-
-        foreach (var rowA in a)
-        {
-            var newRow = new LinkedList<int>();
-            for (int j = 0; j < b.First.Value.Count; j++)
-            {
-                int sum = 0;
-                var nodeA = rowA.First;
-                foreach (var rowB in b)
-                {
-                    sum += nodeA.Value * rowB.ElementAt(j);
-                    nodeA = nodeA.Next;
-                }
-                newRow.AddLast(sum);
-            }
-            result.AddLast(newRow);
-        }
-        return result;
+        var averages = new Dictionary<string, double>();
+        foreach (var pair in temperature)
+            averages[pair.Key] = pair.Value.Average();
+        return averages;
     }
 
     static void Main()
     {
-        var a = new LinkedList<LinkedList<int>>();
-        a.AddLast(new LinkedList<int>(new[] { 1, 2, 3 }));
-        a.AddLast(new LinkedList<int>(new[] { 4, 5, 6 }));
+        string[] months =
+        {
+            "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
+            "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+        };
 
-        var b = new LinkedList<LinkedList<int>>();
-        b.AddLast(new LinkedList<int>(new[] { 7, 8 }));
-        b.AddLast(new LinkedList<int>(new[] { 9, 10 }));
-        b.AddLast(new LinkedList<int>(new[] { 11, 12 }));
+        var rnd = new Random();
+        var temperature = new Dictionary<string, int[]>();
 
-        PrintMatrix(MultiplyMatrices(a, b));
+        foreach (string month in months)
+        {
+            int[] days = new int[30];
+            for (int d = 0; d < days.Length; d++)
+                days[d] = rnd.Next(-30, 36); // от -30 до 35 °C
+            temperature[month] = days;
+        }
+
+        var averages = GetMonthlyAverages(temperature);
+
+        Console.WriteLine("Средняя температура по месяцам:");
+        foreach (var pair in averages)
+            Console.WriteLine($"{pair.Key,-10}: {pair.Value:F2}");
+
+        Console.WriteLine("\nПо возрастанию средней температуры:");
+        foreach (var pair in averages.OrderBy(p => p.Value))
+            Console.WriteLine($"{pair.Key,-10}: {pair.Value:F2}");
     }
 }
