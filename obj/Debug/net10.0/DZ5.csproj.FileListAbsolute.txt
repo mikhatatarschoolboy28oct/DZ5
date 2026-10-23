@@ -12,3 +12,4 @@
 /Users/mihailsmirnov/DZ5/obj/Debug/net10.0/DZ5.pdb
 /Users/mihailsmirnov/DZ5/obj/Debug/net10.0/DZ5.genruntimeconfig.cache
 /Users/mihailsmirnov/DZ5/obj/Debug/net10.0/ref/DZ5.dll
+/Users/mihailsmirnov/DZ5/obj/Debug/net10.0/DZ5.sourcelink.json

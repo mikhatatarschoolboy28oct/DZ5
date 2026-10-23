@@ -1,61 +1,35 @@
 using System;
-using System.IO;
-using System.Text;
 
 class Program
 {
-    
-    private const string Vowels = "аеёиоуыэюяaeiouy";
-    private const string Consonants = "бвгджзйклмнпрстфхцчшщbcdfghjklmnpqrstvwxz";
-
-    
-    static void CountLetters(char[] text, out int vowels, out int consonants)
+    static void PrintMatrix(int[,] m)
     {
-        vowels = 0;
-        consonants = 0;
-
-        foreach (char c in text)
+        for (int i = 0; i < m.GetLength(0); i++)
         {
-            char lower = char.ToLower(c);
-
-            if (Vowels.IndexOf(lower) >= 0)
-                vowels++;
-            else if (Consonants.IndexOf(lower) >= 0)
-                consonants++;
+            for (int j = 0; j < m.GetLength(1); j++)
+                Console.Write($"{m[i, j],6}");
+            Console.WriteLine();
         }
     }
 
-    static void Main(string[] args)
+    static int[,] MultiplyMatrices(int[,] a, int[,] b)
     {
-        Console.OutputEncoding = Encoding.UTF8;
+        if (a.GetLength(1) != b.GetLength(0))
+            throw new ArgumentException("Умножение невозможно: размеры не согласованы.");
 
-        if (args.Length == 0)
-        {
-            Console.WriteLine("Использование: Program <имя_файла>");
-            return;
-        }
+        int[,] r = new int[a.GetLength(0), b.GetLength(1)];
+        for (int i = 0; i < r.GetLength(0); i++)
+            for (int j = 0; j < r.GetLength(1); j++)
+                for (int k = 0; k < a.GetLength(1); k++)
+                    r[i, j] += a[i, k] * b[k, j];
+        return r;
+    }
 
-        string fileName = "world.txt";
+    static void Main()
+    {
+        int[,] a = { { 1, 2, 3 }, { 4, 5, 6 } };
+        int[,] b = { { 7, 8 }, { 9, 10 }, { 11, 12 } };
 
-        if (!File.Exists(fileName))
-        {
-            Console.WriteLine($"Файл \"{fileName}\" не найден.");
-            return;
-        }
-
-        try
-        {
-            
-            char[] text = File.ReadAllText(fileName, Encoding.UTF8).ToCharArray();
-
-            CountLetters(text, out int vowels, out int consonants);
-
-            Console.WriteLine($"Гласных букв:   {vowels}");
-            Console.WriteLine($"Согласных букв: {consonants}");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Ошибка при чтении файла: " + ex.Message);
-        }
+        PrintMatrix(MultiplyMatrices(a, b));
     }
 }
