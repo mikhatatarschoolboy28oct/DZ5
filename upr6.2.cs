@@ -2,34 +2,41 @@ using System;
 
 class Program
 {
-    static void PrintMatrix(int[,] m)
+    static double[] GetMonthlyAverages(int[,] temperature)
     {
-        for (int i = 0; i < m.GetLength(0); i++)
+        int months = temperature.GetLength(0);
+        int days = temperature.GetLength(1);
+        double[] averages = new double[months];
+
+        for (int m = 0; m < months; m++)
         {
-            for (int j = 0; j < m.GetLength(1); j++)
-                Console.Write($"{m[i, j],6}");
-            Console.WriteLine();
+            double sum = 0;
+            for (int d = 0; d < days; d++)
+                sum += temperature[m, d];
+            averages[m] = sum / days;
         }
-    }
-
-    static int[,] MultiplyMatrices(int[,] a, int[,] b)
-    {
-        if (a.GetLength(1) != b.GetLength(0))
-            throw new ArgumentException("Умножение невозможно: размеры не согласованы.");
-
-        int[,] r = new int[a.GetLength(0), b.GetLength(1)];
-        for (int i = 0; i < r.GetLength(0); i++)
-            for (int j = 0; j < r.GetLength(1); j++)
-                for (int k = 0; k < a.GetLength(1); k++)
-                    r[i, j] += a[i, k] * b[k, j];
-        return r;
+        return averages;
     }
 
     static void Main()
     {
-        int[,] a = { { 1, 2, 3 }, { 4, 5, 6 } };
-        int[,] b = { { 7, 8 }, { 9, 10 }, { 11, 12 } };
+        var rnd = new Random();
+        int[,] temperature = new int[12, 30];
 
-        PrintMatrix(MultiplyMatrices(a, b));
+        for (int m = 0; m < 12; m++)
+            for (int d = 0; d < 30; d++)
+                temperature[m, d] = rnd.Next(-30, 36);
+
+        double[] averages = GetMonthlyAverages(temperature);
+
+        Console.WriteLine("Средняя температура по месяцам:");
+        for (int i = 0; i < averages.Length; i++)
+            Console.WriteLine($"Месяц {i + 1}: {averages[i]:F2}");
+
+        Array.Sort(averages);
+
+        Console.WriteLine("\nСредние температуры по возрастанию:");
+        foreach (double avg in averages)
+            Console.WriteLine($"{avg:F2}");
     }
 }
